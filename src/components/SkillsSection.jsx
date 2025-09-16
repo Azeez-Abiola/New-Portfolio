@@ -30,9 +30,23 @@ const SkillsSection = () => {
 
   return (
     <section className="py-24 section-padding bg-black text-white relative">
+      {/* Curved top border */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-cream">
+        <svg 
+          className="absolute bottom-0 w-full h-16" 
+          viewBox="0 0 1200 100" 
+          preserveAspectRatio="none"
+        >
+          <path 
+            d="M0,0 Q600,100 1200,0 L1200,100 L0,100 Z" 
+            fill="#0D0D0D"
+          />
+        </svg>
+      </div>
+
       {/* Section Number */}
       <motion.div 
-        className="absolute top-12 left-8"
+        className="absolute top-12 left-8 z-10"
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
@@ -45,7 +59,7 @@ const SkillsSection = () => {
       </motion.div>
 
       <motion.div 
-        className="container-max"
+        className="container-max relative z-10"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
