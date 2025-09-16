@@ -12,6 +12,9 @@ const HeroSection = () => {
     const timer = setTimeout(() => {
       if (currentWordIndex < words.length - 1) {
         setCurrentWordIndex(prev => prev + 1)
+      } else {
+        // Reset to start the loop again
+        setCurrentWordIndex(-1)
       }
     }, 2000) // 2 seconds delay for each word
 

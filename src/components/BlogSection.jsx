@@ -36,7 +36,21 @@ const BlogSection = () => {
   const duplicatedPosts = [...blogPosts, ...blogPosts, ...blogPosts]
 
   return (
-    <section className="py-24 bg-white/30 overflow-hidden relative">
+    <section className="py-24 bg-black text-white overflow-hidden relative">
+      {/* Curved top border */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-cream">
+        <svg 
+          className="absolute bottom-0 w-full h-16" 
+          viewBox="0 0 1200 100" 
+          preserveAspectRatio="none"
+        >
+          <path 
+            d="M0,0 Q600,100 1200,0 L1200,100 L0,100 Z" 
+            fill="#0D0D0D"
+          />
+        </svg>
+      </div>
+
       {/* Section Number */}
       <motion.div 
         className="absolute top-12 left-8 z-10"
@@ -45,14 +59,14 @@ const BlogSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="font-space-grotesk font-bold text-6xl md:text-7xl text-black/20">
+        <div className="font-space-grotesk font-bold text-6xl md:text-7xl text-white/20">
           04
         </div>
-        <div className="w-12 h-1 bg-black/30 mt-2"></div>
+        <div className="w-12 h-1 bg-white/30 mt-2"></div>
       </motion.div>
 
       <motion.div 
-        className="section-padding"
+        className="section-padding relative z-10"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -62,10 +76,10 @@ const BlogSection = () => {
           className="container-max text-center mb-16"
           variants={itemVariants}
         >
-          <h2 className="font-space-grotesk font-bold text-4xl md:text-5xl lg:text-6xl mb-4">
+          <h2 className="font-space-grotesk font-bold text-4xl md:text-5xl lg:text-6xl mb-4 text-white">
             Latest Insights
           </h2>
-          <p className="font-inter text-lg md:text-xl text-black/70 max-w-2xl mx-auto">
+          <p className="font-inter text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
             Thoughts and insights on web development, mobile apps, and the latest tech trends.
           </p>
         </motion.div>
@@ -129,8 +143,8 @@ const BlogSection = () => {
           </div>
 
           {/* Gradient overlays for infinite scroll effect */}
-          <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white/30 to-transparent pointer-events-none z-10" />
-          <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white/30 to-transparent pointer-events-none z-10" />
+          <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
+          <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
         </motion.div>
 
         {/* View All Posts Link */}
