@@ -77,7 +77,7 @@ const BlogSection = () => {
           variants={itemVariants}
         >
           <h2 className="font-space-grotesk font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 text-white">
-            What's on my <span className="text-deep-orange">Mind</span>
+            What's on my <span className="text-deep-orange">Mind?</span>
           </h2>
           <p className="font-inter text-base md:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto">
             I love sharing my thoughts on development, design patterns, and the tools that make 

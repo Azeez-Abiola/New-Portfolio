@@ -48,43 +48,43 @@ const ProjectPage = () => {
 
   return (
     <motion.div 
-      className="min-h-screen pt-16 pb-24 section-padding"
+      className="min-h-screen pt-16 pb-24 px-4 md:px-8"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <div className="container-max">
+      <div className="max-w-7xl mx-auto">
         {/* Back Button */}
         <motion.button
           onClick={() => navigate('/')}
-          className="mb-8 flex items-center gap-3 text-black hover:text-deep-orange transition-colors duration-300 font-space-grotesk font-semibold"
+          className="mb-6 md:mb-8 flex items-center gap-3 text-black hover:text-deep-orange transition-colors duration-300 font-space-grotesk font-semibold text-sm md:text-base"
           variants={itemVariants}
           whileHover={{ x: -5 }}
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           Back to Portfolio
         </motion.button>
 
         {/* Project Header */}
-        <motion.div className="mb-12" variants={itemVariants}>
-          <h1 className="font-space-grotesk font-bold text-4xl md:text-5xl lg:text-6xl mb-6">
+        <motion.div className="mb-8 md:mb-12" variants={itemVariants}>
+          <h1 className="font-space-grotesk font-bold text-2xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 md:mb-6">
             {project.title}
           </h1>
-          <p className="font-inter text-xl md:text-2xl text-black/70 leading-relaxed max-w-4xl">
+          <p className="font-inter text-base md:text-xl lg:text-2xl text-black/70 leading-relaxed max-w-4xl">
             {project.fullDescription}
           </p>
         </motion.div>
 
         {/* Tech Stack */}
-        <motion.div className="mb-12" variants={itemVariants}>
-          <h2 className="font-space-grotesk font-bold text-2xl mb-6">Technologies Used</h2>
-          <div className="flex flex-wrap gap-4">
+        <motion.div className="mb-8 md:mb-12" variants={itemVariants}>
+          <h2 className="font-space-grotesk font-bold text-lg md:text-2xl mb-4 md:mb-6">Technologies Used</h2>
+          <div className="flex flex-wrap gap-2 md:gap-4">
             {project.tech.map((tech, index) => (
               <motion.span
                 key={index}
-                className="px-6 py-3 bg-black text-cream font-inter font-medium rounded-full"
+                className="px-3 py-2 md:px-6 md:py-3 bg-black text-cream font-inter font-medium rounded-full text-sm md:text-base"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -97,39 +97,29 @@ const ProjectPage = () => {
         </motion.div>
 
         {/* Project Links */}
-        <motion.div className="mb-16" variants={itemVariants}>
-          <div className="flex gap-4">
+        <motion.div className="mb-12 md:mb-16" variants={itemVariants}>
+          <div className="flex flex-col sm:flex-row gap-4">
             <motion.a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 bg-deep-orange text-cream font-space-grotesk font-semibold rounded-full hover-lift hover-glow"
+              className="px-6 sm:px-8 py-3 sm:py-4 bg-deep-orange text-cream font-space-grotesk font-semibold rounded-full hover-lift hover-glow text-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               View Live Site
             </motion.a>
-            <motion.a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 border-2 border-black text-black font-space-grotesk font-semibold rounded-full hover:bg-black hover:text-cream transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Code
-            </motion.a>
           </div>
         </motion.div>
 
-        {/* Project Screenshots */}
+        {/* Project Case Study */}
         <motion.div variants={itemVariants}>
-          <h2 className="font-space-grotesk font-bold text-2xl mb-6">Project Screenshots</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <h2 className="font-space-grotesk font-bold text-lg md:text-2xl mb-4 md:mb-6">Project Case Study</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             {project.screenshots.slice(0, 2).map((screenshot, index) => (
               <motion.div
                 key={index}
-                className="relative overflow-hidden rounded-2xl bg-black/5 aspect-[16/10] hover-glow"
+                className="relative overflow-hidden rounded-lg md:rounded-2xl bg-black/5 aspect-[16/10] hover-glow"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 * index }}
@@ -147,11 +137,11 @@ const ProjectPage = () => {
 
         {/* Navigation to other projects */}
         <motion.div 
-          className="mt-24 pt-12 border-t border-black/10"
+          className="mt-16 md:mt-24 pt-8 md:pt-12 border-t border-black/10"
           variants={itemVariants}
         >
-          <h3 className="font-space-grotesk font-bold text-xl mb-8">Other Projects</h3>
-          <div className="grid md:grid-cols-2 gap-6">
+          <h3 className="font-space-grotesk font-bold text-lg md:text-xl mb-6 md:mb-8">Other Projects</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {projects
               .filter(p => p.id !== project.id)
               .slice(0, 2)

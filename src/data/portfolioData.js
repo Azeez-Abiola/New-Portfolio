@@ -34,7 +34,7 @@ export const projects = [
     description: 'Professional film colorist portfolio showcasing color grading expertise and visual storytelling',
     thumbnail: '/Images/Selected-Works/stephanie.png',
     tech: ['React.js', 'TailwindCSS', 'JavaScript', 'Node.js'],
-    liveUrl: '#',
+    liveUrl: 'https://stephanie-balogun-portfolio.vercel.app/',
     githubUrl: '#',
     screenshots: [
       '/Images/Selected-Works/stephanie.png',
@@ -48,7 +48,7 @@ export const projects = [
     description: 'Music industry platform empowering artists and shaping icons in the entertainment industry',
     thumbnail: '/Images/Selected-Works/propellaco.png',
     tech: ['React.js', 'Node.js', 'MongoDB', 'TailwindCSS'],
-    liveUrl: '#',
+    liveUrl: 'https://propellaco-v2.vercel.app/',
     githubUrl: '#',
     screenshots: [
       '/Images/Selected-Works/propellaco.png',
@@ -62,7 +62,7 @@ export const projects = [
     description: 'Educational technology platform empowering educators with cutting-edge knowledge and tools',
     thumbnail: '/Images/Selected-Works/teazytech.png',
     tech: ['React.js', 'Node.js', 'MongoDB', 'JavaScript'],
-    liveUrl: '#',
+    liveUrl: 'https://teazy-tech.vercel.app/',
     githubUrl: '#',
     screenshots: [
       '/Images/Selected-Works/teazytech.png',
@@ -76,7 +76,7 @@ export const projects = [
     description: 'Technology integration company delivering scalable digital solutions across diverse industries',
     thumbnail: '/Images/Selected-Works/hovidas.jpg',
     tech: ['React.js', 'TailwindCSS', 'JavaScript', 'Node.js'],
-    liveUrl: '#',
+    liveUrl: 'https://hovidas-technologies.vercel.app/',
     githubUrl: '#',
     screenshots: [
       '/Images/Selected-Works/hovidas.jpg',
@@ -90,7 +90,7 @@ export const projects = [
     description: 'Comprehensive entertainment platform for unlimited movie streaming, TV series, and anime content',
     thumbnail: '/Images/Selected-Works/lorenzomovies.png',
     tech: ['React.js', 'Node.js', 'MongoDB', 'TailwindCSS'],
-    liveUrl: '#',
+    liveUrl: 'https://khalteck-lorenzotv.netlify.app/',
     githubUrl: '#',
     screenshots: [
       '/Images/Selected-Works/lorenzomovies.png',
@@ -104,7 +104,7 @@ export const projects = [
     description: 'Comprehensive culinary academy learning management system',
     thumbnail: '/Images/Selected-Works/marvin.png',
     tech: ['React.js', 'TypeScript', 'TailwindCSS', 'Supabase', 'Paystack API'],
-    liveUrl: '#',
+    liveUrl: 'https://marvin-kitchen-frontend.vercel.app/',
     githubUrl: '#',
     screenshots: [
       '/Images/Selected-Works/marvin.png',
@@ -118,13 +118,41 @@ export const projects = [
     description: 'Comprehensive automotive services marketplace platform',
     thumbnail: '/Images/Selected-Works/ogakay.png',
     tech: ['React.js', 'JavaScript', 'TailwindCSS', 'Firebase', 'Google Maps API'],
-    liveUrl: '#',
+    liveUrl: 'https://ogakay-website.vercel.app/',
     githubUrl: '#',
     screenshots: [
       '/Images/Selected-Works/ogakay.png',
       '/Images/Selected-Works/ogakay2.jpg'
     ],
     fullDescription: 'OgaKay Vehicle Maintenance Platform is a comprehensive automotive services marketplace featuring real-time service tracking, multi-role dashboard interfaces, and integrated Google Maps for location services. Built for optimal user engagement and service provider management.'
+  },
+  {
+    id: 8,
+    title: 'LorenzoTV Media',
+    description: 'Transforming media and entertainment through innovation and impact with business promotion and content services',
+    thumbnail: '/Images/Selected-Works/lorenzotvmedia.png',
+    tech: ['React.js', 'JavaScript', 'TailwindCSS', 'Node.js'],
+    liveUrl: 'https://lorenzotv.netlify.app/',
+    githubUrl: '#',
+    screenshots: [
+      '/Images/Selected-Works/lorenzotvmedia.png',
+      '/Images/Selected-Works/lorenzotvmedia1.png'
+    ],
+    fullDescription: 'LorenzoTV Media is a comprehensive media and entertainment platform that transforms businesses through innovation and impact. The platform offers business/brand promotion, web design & maintenance, movie blockbusters, and latest news updates. LorenzoTV helps businesses generate more profits by building brand awareness, driving traffic, and connecting with paying customers while providing entertainment content including blockbuster movies, cartoons, drama, anime, and series.'
+  },
+  {
+    id: 9,
+    title: 'Princess Natasha Portfolio',
+    description: 'B2B Content Writer portfolio showcasing professional content writing and strategy services',
+    thumbnail: '/Images/Selected-Works/princessnatasha.png',
+    tech: ['React.js', 'TailwindCSS', 'JavaScript', 'Vercel'],
+    liveUrl: 'https://princess-natasha-five.vercel.app/',
+    githubUrl: '#',
+    screenshots: [
+      '/Images/Selected-Works/princessnatasha.png',
+      '/Images/Selected-Works/princessnatasha1.png'
+    ],
+    fullDescription: 'Princess Natasha Portfolio is a professional B2B content writer portfolio that tells brand stories in ways that convert passing leads to loyal paying customers. The platform showcases comprehensive content writing and strategy services, featuring goal-driven, measurable, and relatable content solutions. Services include content writing, content strategy, and brand strategy with expertise in SEO and audience engagement for businesses worldwide.'
   }
 ];
 
@@ -136,7 +164,7 @@ export const mobileProjects = [
     description: 'Africa\'s most trusted fashion platform connecting customers with verified stylists and designers',
     thumbnail: '/Images/Selected-Works/Mobile-works/eazyfit.png',
     tech: ['React Native', 'Expo', 'JavaScript', 'Firebase', 'Payment Integration'],
-    liveUrl: '#',
+    liveUrl: 'https://eazyfitfashion.com/',
     githubUrl: '#',
     screenshots: ['/Images/Selected-Works/Mobile-works/eazyfit1.png', '/Images/Selected-Works/Mobile-works/eazyfit2.png'],
     fullDescription: 'EazyFit is Africa\'s most trusted fashion platform that solves the biggest problems in custom fashion ordering. The app connects customers with verified stylists for both native wear and English styles, featuring secure payments, on-time delivery guarantee, and quality-checked designers for stress-free fashion ordering.'
@@ -147,7 +175,7 @@ export const mobileProjects = [
     description: 'Private banking mobile application providing secure, efficient, and personalized banking services',
     thumbnail: '/Images/Selected-Works/Mobile-works/IWM.png',
     tech: ['React Native', 'TypeScript', 'Expo', 'Secure Banking APIs', 'Apple Pay', 'Google Pay'],
-    liveUrl: '#',
+    liveUrl: 'https://www.iwmprivate.com/',
     githubUrl: '#',
     screenshots: ['/Images/Selected-Works/Mobile-works/IWM1.png', '/Images/Selected-Works/Mobile-works/IWM2.png'],
     fullDescription: 'IWM is a comprehensive private banking mobile application that simplifies banking with same-day USD account opening worldwide. Features include secure cross-border transfers, physical Visa debit card delivery, Apple/Google Pay support, dedicated relationship manager chat, and deposits insured up to $1M by US law.'
@@ -158,7 +186,7 @@ export const mobileProjects = [
     description: 'Mobile entertainment platform offering unlimited movies, TV series, and anime streaming',
     thumbnail: '/Images/Selected-Works/Mobile-works/lorenzomovieapp.png', 
     tech: ['React Native', 'JavaScript', 'Node.js', 'MongoDB', 'Video Streaming APIs'],
-    liveUrl: '#',
+    liveUrl: 'https://khalteck-lorenzotv.netlify.app/',
     githubUrl: '#',
     screenshots: ['/Images/Selected-Works/Mobile-works/lorenzomovieapp1.png', '/Images/Selected-Works/Mobile-works/lorenzomovieapp2.png'],
     fullDescription: 'Lorenzo Movie App is a feature-rich mobile entertainment platform offering unlimited movies, TV series, animes, and more. The app provides HD 4K quality streaming, download and offline viewing capabilities, multiple content categories, and access to tons of blockbuster movies and trending content.'

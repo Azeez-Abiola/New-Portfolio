@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 const workExperience = [
   {
@@ -29,25 +29,25 @@ const workExperience = [
   {
     id: 2,
     position: 'Senior Frontend Developer',
-    company: 'Styleitpadi Mobile App',
+    company: 'IWM Private Banking',
     period: 'September 2024 – June 2025',
     duration: '10 months (Full-time/Contract)',
-    description: 'Developed and maintained a comprehensive fashion designer marketplace mobile application using React Native, TypeScript, and Expo.',
+    description: 'Developed and maintained a comprehensive private banking mobile application using React Native, TypeScript, and Expo.',
     responsibilities: [
-      'Built fashion designer marketplace mobile application',
-      'Implemented multi-step registration flows',
+      'Built private banking mobile application',
+      'Implemented secure banking authentication flows',
       'Created interactive dashboard components',
-      'Integrated Google Places API for location services',
+      'Integrated secure banking APIs and payment systems',
       'Developed comprehensive testing suite with Jest',
       'Built role-based access control systems'
     ],
     projects: [
-      'Styleitpadi Fashion Designer Marketplace',
-      'Multi-Role Dashboard System',
-      'Designer Onboarding System',
-      'Real-time Business Management'
+      'IWM Private Banking Mobile App',
+      'Secure Banking Dashboard System',
+      'Customer Onboarding System',
+      'Real-time Banking Management'
     ],
-    technologies: ['React Native', 'TypeScript', 'Expo', 'Supabase', 'Google Places API', 'Jest', 'Context API'],
+    technologies: ['React Native', 'TypeScript', 'Expo', 'Secure Banking APIs', 'Apple Pay', 'Google Pay', 'Jest'],
     isActive: false
   },
   {
@@ -209,6 +209,22 @@ const workExperience = [
 const WorkExperienceSection = () => {
   const [selectedExperience, setSelectedExperience] = useState(workExperience[0])
   const [hoveredCard, setHoveredCard] = useState(null)
+  const detailsRef = useRef(null)
+
+  // Function to handle experience selection and mobile scroll
+  const handleExperienceSelect = (experience) => {
+    setSelectedExperience(experience)
+    
+    // Scroll to details section on mobile/tablet
+    if (window.innerWidth < 1024 && detailsRef.current) {
+      setTimeout(() => {
+        detailsRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })
+      }, 100)
+    }
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -246,7 +262,7 @@ const WorkExperienceSection = () => {
   }
 
   return (
-    <section className="py-24 bg-gradient-to-br from-black via-gray-900 to-black text-white relative overflow-hidden">
+    <section className="min-h-screen py-16 md:py-24 bg-gradient-to-br from-black via-gray-900 to-black text-white relative overflow-hidden">
       {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
@@ -301,35 +317,29 @@ const WorkExperienceSection = () => {
         <div className="w-8 md:w-12 h-1 bg-white/30 mt-2"></div>
       </motion.div>
 
-      <motion.div 
-        className="container-max section-padding relative z-10 px-4 md:px-8"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+      <div 
+        className="max-w-7xl mx-auto py-16 md:py-20 relative z-10 px-4 md:px-8"
       >
         {/* Section Header */}
-        <motion.div 
+        <div 
           className="text-center mb-16 md:mb-20"
-          variants={itemVariants}
         >
           <h2 className="font-space-grotesk font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6">
-            Work <span className="text-deep-orange">Experience</span>
+            My Work <span className="text-deep-orange">Experience</span>
           </h2>
           <p className="font-inter text-base md:text-lg lg:text-xl text-white/70 max-w-3xl mx-auto">
             Over 5 years of crafting digital experiences across startups and established companies. 
             Each role has shaped my expertise in building scalable, user-centric applications.
           </p>
-        </motion.div>
+        </div>
 
         {/* Experience Layout */}
-        <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Experience List - Left Side */}
-          <motion.div 
-            className="lg:col-span-1 space-y-4"
-            variants={itemVariants}
+          <div 
+            className="lg:col-span-1 space-y-4 order-1 lg:order-1"
           >
-            <h3 className="font-space-grotesk font-bold text-xl mb-6 text-deep-orange">
+            <h3 className="font-space-grotesk font-bold text-lg md:text-xl mb-4 md:mb-6 text-deep-orange">
               Companies & Roles
             </h3>
             <div className="space-y-3">
@@ -341,7 +351,7 @@ const WorkExperienceSection = () => {
                       ? 'bg-deep-orange/20 border-deep-orange text-white' 
                       : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                   }`}
-                  onClick={() => setSelectedExperience(exp)}
+                  onClick={() => handleExperienceSelect(exp)}
                   onMouseEnter={() => setHoveredCard(exp.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                   whileHover={{ scale: 1.02 }}
@@ -349,7 +359,7 @@ const WorkExperienceSection = () => {
                   variants={cardVariants}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-space-grotesk font-semibold text-sm">
+                    <h4 className="font-space-grotesk font-semibold text-sm md:text-base">
                       {exp.company}
                     </h4>
                     {exp.isActive && (
@@ -358,17 +368,17 @@ const WorkExperienceSection = () => {
                       </span>
                     )}
                   </div>
-                  <p className="font-inter text-xs text-white/60 mb-1">{exp.position}</p>
-                  <p className="font-inter text-xs text-white/50">{exp.duration}</p>
+                  <p className="font-inter text-xs md:text-sm text-white/60 mb-1">{exp.position}</p>
+                  <p className="font-inter text-xs md:text-sm text-white/50">{exp.duration}</p>
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Experience Details - Right Side */}
-          <motion.div 
-            className="lg:col-span-2"
-            variants={itemVariants}
+          <div 
+            ref={detailsRef}
+            className="lg:col-span-2 order-2 lg:order-2"
           >
             <motion.div 
               className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10"
@@ -474,13 +484,12 @@ const WorkExperienceSection = () => {
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Stats Section */}
-        <motion.div 
+        <div 
           className="mt-16 md:mt-20 grid md:grid-cols-4 gap-6"
-          variants={itemVariants}
         >
           {[
             { number: '5+', label: 'Years Experience' },
@@ -503,8 +512,8 @@ const WorkExperienceSection = () => {
               <div className="font-inter text-white/70">{stat.label}</div>
             </motion.div>
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   )
 }

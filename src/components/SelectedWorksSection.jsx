@@ -241,24 +241,24 @@ const SelectedWorksSection = () => {
         </div>
       </motion.div>
 
-      {/* Section Title - Centered */}
+      {/* Section Title - Mobile: left-aligned, Desktop: centered */}
       <motion.div 
-        className="relative z-30 text-center mb-16 md:mb-20 pt-16 md:pt-20"
+        className="absolute top-20 md:top-16 left-4 md:left-1/3 md:transform md:-translate-x-1/4 z-30 text-left md:text-center max-w-xs md:max-w-2xl"
         initial={{ opacity: 0, y: -50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
       >
-        <h2 className="font-space-grotesk font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-black mb-4 md:mb-6">
+        <h2 className="font-space-grotesk font-bold text-2xl md:text-4xl lg:text-5xl text-black mb-2 md:mb-3">
           Web Projects I've <span className="text-deep-orange">Built</span>
         </h2>
         <motion.p 
-          className="font-inter text-sm md:text-base text-black/60 max-w-md mx-auto mb-8 md:mb-12"
+          className="font-inter text-xs md:text-base text-black/60"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          Full-stack web applications crafted with passion and purpose ✨
+          Full-stack web applications crafted with passion and purpose
         </motion.p>
       </motion.div>
 
@@ -283,7 +283,7 @@ const SelectedWorksSection = () => {
       </motion.div>
 
       {/* Card Container */}
-      <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8">
+      <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8 pt-32 md:pt-40">
         <div className="relative w-full max-w-6xl h-[70vh] flex items-center justify-center perspective-1000">
           {projects.map((project, index) => {
             const isActive = index === currentIndex
