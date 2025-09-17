@@ -207,19 +207,19 @@ const HeroSection = () => {
       </motion.div>
 
       {/* Main Content */}
-      <div className="flex items-center justify-center min-h-screen section-padding px-4 md:px-8">
+      <div className="relative flex items-center justify-center min-h-screen section-padding px-4 md:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8 lg:gap-0">
           {/* Left Side - Number */}
           <motion.div 
-            className="text-center lg:text-left order-1 lg:order-1"
+            className="absolute top-8 left-4 lg:static lg:text-left order-1 lg:order-1"
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8, duration: 1 }}
           >
-            <div className="font-space-grotesk font-bold text-6xl md:text-8xl lg:text-9xl text-black">
+            <div className="font-space-grotesk font-bold text-4xl md:text-6xl lg:text-9xl text-black">
               01
             </div>
-            <div className="w-12 lg:w-16 h-1 bg-black mt-4 mx-auto lg:mx-0"></div>
+            <div className="w-8 lg:w-16 h-1 bg-black mt-2 lg:mt-4 mx-auto lg:mx-0"></div>
           </motion.div>
 
           {/* Center - Profile Image */}

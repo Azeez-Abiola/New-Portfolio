@@ -191,7 +191,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <p className="font-space-grotesk font-semibold text-sm md:text-base">Location</p>
-                    <p className="font-inter text-black/70 text-sm md:text-base">Ilorin, Nigeria</p>
+                    <p className="font-inter text-black/70 text-sm md:text-base">Lagos, Nigeria.</p>
                   </div>
                 </motion.div>
 

@@ -43,9 +43,14 @@ const SelectedWorksSection = () => {
 
       const section = sectionRef.current
       const rect = section.getBoundingClientRect()
-      const isInView = rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.9
+      
+      // Check if user has entered the section
+      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
+      const isCompletelyInView = rect.top <= 0 && rect.bottom >= window.innerHeight
+      const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
 
-      if (isInView) {
+      // If user has entered the section and section is in view, lock scrolling
+      if (hasEnteredSection && isPartiallyInView) {
         e.preventDefault()
         
         // Prevent rapid scrolling
@@ -59,12 +64,17 @@ const SelectedWorksSection = () => {
           if (currentIndex < projects.length - 1) {
             setCurrentIndex(prev => prev + 1)
           } else {
-            // At last project, allow scroll to next section
+            // At last project, allow scroll to next section only after a delay
             setTimeout(() => {
               setScrollLocked(false)
-              // Allow page to scroll to next section
-              window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })
-            }, 500)
+              // Force scroll to next section
+              const nextSection = section.nextElementSibling
+              if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' })
+              } else {
+                window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })
+              }
+            }, 800)
             return
           }
         } else if (deltaY < 0) {
@@ -72,12 +82,17 @@ const SelectedWorksSection = () => {
           if (currentIndex > 0) {
             setCurrentIndex(prev => prev - 1)
           } else {
-            // At first project, allow scroll to previous section
+            // At first project, allow scroll to previous section only after a delay
             setTimeout(() => {
               setScrollLocked(false)
-              // Allow page to scroll to previous section
-              window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' })
-            }, 500)
+              // Force scroll to previous section
+              const prevSection = section.previousElementSibling
+              if (prevSection) {
+                prevSection.scrollIntoView({ behavior: 'smooth' })
+              } else {
+                window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' })
+              }
+            }, 800)
             return
           }
         }
@@ -85,7 +100,97 @@ const SelectedWorksSection = () => {
         // Reset scroll lock after animation completes
         setTimeout(() => {
           setScrollLocked(false)
-        }, 1000) // Increased timeout to prevent rapid flipping
+        }, 1200) // Longer timeout for smoother experience
+      }
+    }
+
+    // Enhanced touch handling for mobile
+    let touchStartY = 0
+    let touchEndY = 0
+
+    const handleTouchStart = (e) => {
+      if (!sectionRef.current) return
+      const section = sectionRef.current
+      const rect = section.getBoundingClientRect()
+      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
+      const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
+
+      if (hasEnteredSection && isPartiallyInView) {
+        touchStartY = e.touches[0].clientY
+      }
+    }
+
+    const handleTouchMove = (e) => {
+      if (!sectionRef.current) return
+      const section = sectionRef.current
+      const rect = section.getBoundingClientRect()
+      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
+      const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
+
+      if (hasEnteredSection && isPartiallyInView && touchStartY !== 0) {
+        e.preventDefault() // Prevent default scroll
+      }
+    }
+
+    const handleTouchEnd = (e) => {
+      if (!sectionRef.current || touchStartY === 0) return
+      
+      const section = sectionRef.current
+      const rect = section.getBoundingClientRect()
+      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
+      const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
+
+      if (hasEnteredSection && isPartiallyInView) {
+        touchEndY = e.changedTouches[0].clientY
+        const touchDiff = touchStartY - touchEndY
+        const minSwipeDistance = 50
+
+        if (Math.abs(touchDiff) > minSwipeDistance && !scrollLocked) {
+          setScrollLocked(true)
+
+          if (touchDiff > 0) {
+            // Swiped up - next project
+            if (currentIndex < projects.length - 1) {
+              setCurrentIndex(prev => prev + 1)
+            } else {
+              // At last project, allow scroll to next section
+              setTimeout(() => {
+                setScrollLocked(false)
+                const nextSection = section.nextElementSibling
+                if (nextSection) {
+                  nextSection.scrollIntoView({ behavior: 'smooth' })
+                } else {
+                  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })
+                }
+              }, 800)
+              return
+            }
+          } else {
+            // Swiped down - previous project
+            if (currentIndex > 0) {
+              setCurrentIndex(prev => prev - 1)
+            } else {
+              // At first project, allow scroll to previous section
+              setTimeout(() => {
+                setScrollLocked(false)
+                const prevSection = section.previousElementSibling
+                if (prevSection) {
+                  prevSection.scrollIntoView({ behavior: 'smooth' })
+                } else {
+                  window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' })
+                }
+              }, 800)
+              return
+            }
+          }
+
+          setTimeout(() => {
+            setScrollLocked(false)
+          }, 1200)
+        }
+
+        touchStartY = 0
+        touchEndY = 0
       }
     }
 
@@ -111,54 +216,18 @@ const SelectedWorksSection = () => {
       }
     }
 
-    // Add touch support for mobile
-    const handleTouchStart = (e) => {
-      if (!sectionRef.current) return
-      const section = sectionRef.current
-      const rect = section.getBoundingClientRect()
-      const isInView = rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.9
-
-      if (isInView) {
-        const touchStartY = e.touches[0].clientY
-        
-        const handleTouchMove = (moveEvent) => {
-          if (scrollLocked) return
-          
-          const touchEndY = moveEvent.touches[0].clientY
-          const deltaY = touchStartY - touchEndY
-          
-          if (Math.abs(deltaY) > 50) { // Minimum swipe distance
-            setScrollLocked(true)
-            
-            if (deltaY > 0 && currentIndex < projects.length - 1) {
-              // Swipe up - next project
-              setCurrentIndex(prev => prev + 1)
-            } else if (deltaY < 0 && currentIndex > 0) {
-              // Swipe down - previous project
-              setCurrentIndex(prev => prev - 1)
-            }
-            
-            setTimeout(() => setScrollLocked(false), 1000)
-            document.removeEventListener('touchmove', handleTouchMove)
-          }
-        }
-
-        document.addEventListener('touchmove', handleTouchMove, { passive: false })
-        
-        setTimeout(() => {
-          document.removeEventListener('touchmove', handleTouchMove)
-        }, 1000)
-      }
-    }
-
     window.addEventListener('wheel', handleScroll, { passive: false })
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('touchstart', handleTouchStart, { passive: false })
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
+    window.addEventListener('touchend', handleTouchEnd, { passive: false })
 
     return () => {
       window.removeEventListener('wheel', handleScroll)
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
       clearTimeout(scrollTimeoutRef.current)
     }
   }, [currentIndex, scrollLocked])

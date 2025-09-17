@@ -231,19 +231,19 @@ const WorkExperienceSection = () => {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.1
+        delayChildren: 0.1, // Reduced from 0.3
+        staggerChildren: 0.05 // Reduced from 0.1
       }
     }
   }
 
   const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
+    hidden: { y: 20, opacity: 0 }, // Reduced from y: 50
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.8,
+        duration: 0.4, // Reduced from 0.8
         ease: "easeOut"
       }
     }
@@ -308,8 +308,8 @@ const WorkExperienceSection = () => {
         className="absolute top-8 md:top-12 left-4 md:left-8 z-10"
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 0.4 }}
       >
         <div className="font-space-grotesk font-bold text-4xl md:text-6xl lg:text-7xl text-white/20">
           05
@@ -431,7 +431,7 @@ const WorkExperienceSection = () => {
                       className="flex items-start gap-3"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
+                      transition={{ delay: index * 0.02 }}
                     >
                       <div className="w-1.5 h-1.5 bg-deep-orange rounded-full mt-2 flex-shrink-0"></div>
                       <span className="font-inter text-sm text-white/70 leading-relaxed">
@@ -454,7 +454,7 @@ const WorkExperienceSection = () => {
                       className="px-3 py-1.5 bg-deep-orange/10 text-deep-orange border border-deep-orange/20 rounded-full text-sm font-inter"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.1 }}
+                      transition={{ delay: index * 0.02 }}
                       whileHover={{ scale: 1.05 }}
                     >
                       {project}
@@ -475,7 +475,7 @@ const WorkExperienceSection = () => {
                       className="px-3 py-1.5 bg-white/10 text-white rounded-full text-sm font-inter hover:bg-white/20 transition-colors duration-300"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.1 }}
+                      transition={{ delay: index * 0.02 }}
                       whileHover={{ scale: 1.05 }}
                     >
                       {tech}
@@ -503,8 +503,8 @@ const WorkExperienceSection = () => {
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ delay: index * 0.05 }}
             >
               <div className="font-space-grotesk font-bold text-3xl md:text-4xl text-deep-orange mb-2">
                 {stat.number}

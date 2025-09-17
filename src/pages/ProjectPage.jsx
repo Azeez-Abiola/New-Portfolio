@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { projects } from '../data/portfolioData'
 
@@ -6,6 +7,10 @@ const ProjectPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const project = projects.find(p => p.id === parseInt(id))
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   if (!project) {
     return (
