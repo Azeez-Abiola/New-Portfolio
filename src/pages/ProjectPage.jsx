@@ -126,7 +126,7 @@ const ProjectPage = () => {
         <motion.div variants={itemVariants}>
           <h2 className="font-space-grotesk font-bold text-2xl mb-6">Project Screenshots</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            {project.screenshots.map((screenshot, index) => (
+            {project.screenshots.slice(0, 2).map((screenshot, index) => (
               <motion.div
                 key={index}
                 className="relative overflow-hidden rounded-2xl bg-black/5 aspect-[16/10] hover-glow"
@@ -138,7 +138,7 @@ const ProjectPage = () => {
                 <img 
                   src={screenshot}
                   alt={`${project.title} screenshot ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </motion.div>
             ))}

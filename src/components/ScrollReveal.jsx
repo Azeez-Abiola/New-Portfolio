@@ -28,9 +28,9 @@ const ScrollReveal = ({ children, className = "", delay = 0, duration = 0.8 }) =
       initial="hidden"
       whileInView="visible"
       viewport={{ 
-        once: false, // Animation triggers every time it comes into view
+        once: true, // Animation triggers only once when first coming into view
         amount: 0.2, // Trigger when 20% of the element is visible
-        margin: "-100px 0px -100px 0px" // Start animation slightly before element is fully visible
+        margin: "-50px 0px -50px 0px" // Start animation slightly before element is fully visible
       }}
       variants={variants}
       className={className}

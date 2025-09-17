@@ -1,196 +1,434 @@
-import { motion } from 'framer-motion'
+import { motion, useAnimationControls } from 'framer-motion'
 import { projects } from '../data/portfolioData'
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
 
 const SelectedWorksSection = () => {
   const navigate = useNavigate()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [prevIndex, setPrevIndex] = useState(0)
+  const [scrollLocked, setScrollLocked] = useState(false)
+  const [direction, setDirection] = useState(0)
+  const sectionRef = useRef(null)
+  const scrollTimeoutRef = useRef(null)
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
+  // Track direction when index changes
+  useEffect(() => {
+    // Ensure currentIndex is within bounds
+    const maxIndex = projects.length - 1
+    if (currentIndex > maxIndex) {
+      setCurrentIndex(maxIndex)
+      return
     }
-  }
+    if (currentIndex < 0) {
+      setCurrentIndex(0)
+      return
+    }
 
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
+    if (currentIndex > prevIndex) {
+      setDirection(1) // Moving forward
+    } else if (currentIndex < prevIndex) {
+      setDirection(-1) // Moving backward
     }
-  }
+    setPrevIndex(currentIndex)
+  }, [currentIndex, prevIndex, projects.length])
 
   const handleProjectClick = (projectId) => {
     navigate(`/project/${projectId}`)
   }
 
+  useEffect(() => {
+    const handleScroll = (e) => {
+      if (!sectionRef.current) return
+
+      const section = sectionRef.current
+      const rect = section.getBoundingClientRect()
+      const isInView = rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.9
+
+      if (isInView) {
+        e.preventDefault()
+        
+        // Prevent rapid scrolling
+        if (scrollLocked) return
+        setScrollLocked(true)
+
+        const deltaY = e.deltaY
+        
+        if (deltaY > 0) {
+          // Scroll down - next project
+          if (currentIndex < projects.length - 1) {
+            setCurrentIndex(prev => prev + 1)
+          } else {
+            // At last project, allow scroll to next section
+            setTimeout(() => {
+              setScrollLocked(false)
+              // Allow page to scroll to next section
+              window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })
+            }, 500)
+            return
+          }
+        } else if (deltaY < 0) {
+          // Scroll up - previous project
+          if (currentIndex > 0) {
+            setCurrentIndex(prev => prev - 1)
+          } else {
+            // At first project, allow scroll to previous section
+            setTimeout(() => {
+              setScrollLocked(false)
+              // Allow page to scroll to previous section
+              window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' })
+            }, 500)
+            return
+          }
+        }
+
+        // Reset scroll lock after animation completes
+        setTimeout(() => {
+          setScrollLocked(false)
+        }, 1000) // Increased timeout to prevent rapid flipping
+      }
+    }
+
+    const handleKeyDown = (e) => {
+      if (!sectionRef.current) return
+
+      const section = sectionRef.current
+      const rect = section.getBoundingClientRect()
+      const isInView = rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.9
+
+      if (isInView && !scrollLocked) {
+        if (e.key === 'ArrowDown' && currentIndex < projects.length - 1) {
+          e.preventDefault()
+          setScrollLocked(true)
+          setCurrentIndex(prev => prev + 1)
+          setTimeout(() => setScrollLocked(false), 1000)
+        } else if (e.key === 'ArrowUp' && currentIndex > 0) {
+          e.preventDefault()
+          setScrollLocked(true)
+          setCurrentIndex(prev => prev - 1)
+          setTimeout(() => setScrollLocked(false), 1000)
+        }
+      }
+    }
+
+    // Add touch support for mobile
+    const handleTouchStart = (e) => {
+      if (!sectionRef.current) return
+      const section = sectionRef.current
+      const rect = section.getBoundingClientRect()
+      const isInView = rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.9
+
+      if (isInView) {
+        const touchStartY = e.touches[0].clientY
+        
+        const handleTouchMove = (moveEvent) => {
+          if (scrollLocked) return
+          
+          const touchEndY = moveEvent.touches[0].clientY
+          const deltaY = touchStartY - touchEndY
+          
+          if (Math.abs(deltaY) > 50) { // Minimum swipe distance
+            setScrollLocked(true)
+            
+            if (deltaY > 0 && currentIndex < projects.length - 1) {
+              // Swipe up - next project
+              setCurrentIndex(prev => prev + 1)
+            } else if (deltaY < 0 && currentIndex > 0) {
+              // Swipe down - previous project
+              setCurrentIndex(prev => prev - 1)
+            }
+            
+            setTimeout(() => setScrollLocked(false), 1000)
+            document.removeEventListener('touchmove', handleTouchMove)
+          }
+        }
+
+        document.addEventListener('touchmove', handleTouchMove, { passive: false })
+        
+        setTimeout(() => {
+          document.removeEventListener('touchmove', handleTouchMove)
+        }, 1000)
+      }
+    }
+
+    window.addEventListener('wheel', handleScroll, { passive: false })
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('touchstart', handleTouchStart, { passive: false })
+
+    return () => {
+      window.removeEventListener('wheel', handleScroll)
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('touchstart', handleTouchStart)
+      clearTimeout(scrollTimeoutRef.current)
+    }
+  }, [currentIndex, scrollLocked])
+
+  const cardVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+      rotateY: direction > 0 ? 90 : -90,
+      scale: 0.8,
+      zIndex: 1
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      rotateY: 0,
+      scale: 1,
+      zIndex: 20,
+      transition: {
+        duration: 1,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? -1000 : 1000,
+      opacity: 0,
+      rotateY: direction > 0 ? -90 : 90,
+      scale: 0.8,
+      zIndex: 1,
+      transition: {
+        duration: 1,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    })
+  }
+
   return (
-    <section className="py-24 section-padding bg-cream relative">
-      {/* Curved top border */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-black">
-        <svg 
-          className="absolute bottom-0 w-full h-16" 
-          viewBox="0 0 1200 100" 
-          preserveAspectRatio="none"
-        >
-          <path 
-            d="M0,0 Q600,100 1200,0 L1200,100 L0,100 Z" 
-            fill="#FDF6E3"
-          />
-        </svg>
-      </div>
+    <section 
+      ref={sectionRef}
+      className="min-h-screen bg-cream relative flex items-center justify-center overflow-hidden"
+      style={{ scrollSnapType: 'y mandatory' }}
+    >
 
       {/* Section Number */}
       <motion.div 
-        className="absolute top-12 left-8 z-10"
+        className="absolute top-8 md:top-12 left-4 md:left-8 z-30"
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="font-space-grotesk font-bold text-6xl md:text-7xl text-black/20">
+        <div className="font-space-grotesk font-bold text-4xl md:text-6xl lg:text-7xl text-black/20">
           03
         </div>
-        <div className="w-12 h-1 bg-black/30 mt-2"></div>
+        <div className="w-8 md:w-12 h-1 bg-black/30 mt-2"></div>
       </motion.div>
 
+      {/* Progress Indicator */}
       <motion.div 
-        className="container-max relative z-10"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        className="absolute top-8 md:top-12 right-4 md:right-8 z-30"
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
       >
-        <motion.div 
-          className="text-center mb-16"
-          variants={itemVariants}
-        >
-          <h2 className="font-space-grotesk font-bold text-4xl md:text-5xl lg:text-6xl mb-4">
-            Selected Works
-          </h2>
-          <p className="font-inter text-lg md:text-xl text-black/70 max-w-2xl mx-auto">
-            A collection of projects that showcase my skills and passion for creating 
-            meaningful digital experiences.
-          </p>
-        </motion.div>
+        <div className="flex flex-col items-center gap-2">
+          <div className="font-space-grotesk font-semibold text-sm md:text-base text-black/60">
+            {String(currentIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+          </div>
+          <div className="flex flex-col gap-1">
+            {projects.map((_, index) => (
+              <div
+                key={index}
+                className={`w-1 h-6 md:h-8 rounded-full transition-all duration-500 ${
+                  index === currentIndex ? 'bg-deep-orange' : 'bg-black/20'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </motion.div>
 
-        <div className="grid gap-8 md:gap-12">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              className={`grid md:grid-cols-2 gap-8 items-center ${
-                index % 2 === 1 ? 'md:grid-flow-col-dense' : ''
-              }`}
-              variants={itemVariants}
-            >
-              {/* Project Image */}
-              <motion.div 
-                className={`${index % 2 === 1 ? 'md:col-start-2' : ''} group cursor-pointer`}
-                whileHover={{ scale: 1.02 }}
-                onClick={() => handleProjectClick(project.id)}
+      {/* Section Title - Centered */}
+      <motion.div 
+        className="relative z-30 text-center mb-16 md:mb-20 pt-16 md:pt-20"
+        initial={{ opacity: 0, y: -50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
+        <h2 className="font-space-grotesk font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-black mb-4 md:mb-6">
+          Web Projects I've <span className="text-deep-orange">Built</span>
+        </h2>
+        <motion.p 
+          className="font-inter text-sm md:text-base text-black/60 max-w-md mx-auto mb-8 md:mb-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          Full-stack web applications crafted with passion and purpose ✨
+        </motion.p>
+      </motion.div>
+
+      {/* Scroll Hint */}
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.5 }}
+        animate={{ y: [0, -10, 0] }}
+        style={{ 
+          animation: 'bounce 2s infinite'
+        }}
+      >
+        <div className="flex flex-col items-center gap-2 text-black/60">
+          <div className="font-inter text-xs md:text-sm tracking-widest">SCROLL TO FLIP</div>
+          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </motion.div>
+
+      {/* Card Container */}
+      <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8">
+        <div className="relative w-full max-w-6xl h-[70vh] flex items-center justify-center perspective-1000">
+          {projects.map((project, index) => {
+            const isActive = index === currentIndex
+            const isPrev = index === currentIndex - 1
+            const isNext = index === currentIndex + 1
+            const shouldRender = isActive || isPrev || isNext
+            
+            if (!shouldRender) return null
+            
+            let animationState = "exit"
+            if (isActive) {
+              animationState = "center"
+            } else if ((index > currentIndex && direction > 0) || (index < currentIndex && direction < 0)) {
+              animationState = "enter"
+            }
+            
+            return (
+              <motion.div
+                key={`${project.id}-${currentIndex}`} // Force re-render on index change
+                className={`absolute inset-0`}
+                variants={cardVariants}
+                initial="enter"
+                animate={animationState}
+                custom={direction}
+                style={{
+                  zIndex: isActive ? 20 : 10
+                }}
               >
-                <div className="relative overflow-hidden rounded-2xl bg-black/5 aspect-[4/3] hover-glow">
-                  <img 
-                    src={project.thumbnail}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-deep-orange/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
-                  {/* Overlay content */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <motion.div 
-                      className="bg-cream px-6 py-3 rounded-full font-space-grotesk font-semibold"
-                      whileHover={{ scale: 1.1 }}
+                <div className="w-full h-full grid md:grid-cols-2 gap-8 items-center bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-12 shadow-2xl">
+                  {/* Project Image */}
+                  <motion.div 
+                    className="group cursor-pointer h-full"
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => handleProjectClick(project.id)}
+                  >
+                    <div className="relative overflow-hidden rounded-2xl h-full bg-black/5 hover-glow">
+                      <img 
+                        src={project.thumbnail}
+                        alt={project.title}
+                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-deep-orange/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Overlay content */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <motion.div 
+                          className="bg-cream px-4 md:px-6 py-2 md:py-3 rounded-full font-space-grotesk font-semibold text-sm md:text-base"
+                          whileHover={{ scale: 1.1 }}
+                        >
+                          View Project
+                        </motion.div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Project Content */}
+                  <div className="space-y-4 md:space-y-6 h-full flex flex-col justify-center">
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 50 }}
+                      transition={{ duration: 0.8, delay: isActive ? 0.4 : 0 }}
                     >
-                      View Project
+                      <h3 className="font-space-grotesk font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-3 md:mb-4">
+                        {project.title}
+                      </h3>
+                      <p className="font-inter text-base md:text-lg lg:text-xl text-black/70 leading-relaxed mb-4 md:mb-6">
+                        {project.description}
+                      </p>
+                      
+                      {/* Tech Stack */}
+                      <div className="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
+                        {project.tech.map((tech, techIndex) => (
+                          <motion.span
+                            key={techIndex}
+                            className="px-3 md:px-4 py-1.5 md:py-2 bg-black/5 text-black font-inter font-medium rounded-full text-xs md:text-sm"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ 
+                              opacity: isActive ? 1 : 0, 
+                              scale: isActive ? 1 : 0.8 
+                            }}
+                            transition={{ duration: 0.5, delay: isActive ? 0.6 + techIndex * 0.1 : 0 }}
+                            whileHover={{ scale: 1.05, backgroundColor: '#FF5722', color: '#FDF6E3' }}
+                          >
+                            {tech}
+                          </motion.span>
+                        ))}
+                      </div>
+
+                      {/* Project Links */}
+                      <motion.div 
+                        className="flex flex-col sm:flex-row gap-3 md:gap-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                        transition={{ duration: 0.8, delay: isActive ? 0.8 : 0 }}
+                      >
+                        <motion.button
+                          className="px-6 md:px-8 py-2.5 md:py-3 bg-deep-orange text-cream font-space-grotesk font-semibold rounded-full hover-lift hover-glow text-sm md:text-base"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleProjectClick(project.id)}
+                        >
+                          View Project
+                        </motion.button>
+                        <motion.a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-6 md:px-8 py-2.5 md:py-3 border-2 border-black text-black font-space-grotesk font-semibold rounded-full hover:bg-black hover:text-cream transition-colors duration-300 text-center text-sm md:text-base"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          GitHub
+                        </motion.a>
+                      </motion.div>
                     </motion.div>
                   </div>
                 </div>
               </motion.div>
-
-              {/* Project Content */}
-              <div className={`${index % 2 === 1 ? 'md:col-start-1' : ''} space-y-6`}>
-                <motion.div
-                  initial={{ opacity: 0, x: index % 2 === 1 ? 50 : -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  <h3 className="font-space-grotesk font-bold text-2xl md:text-3xl lg:text-4xl mb-4">
-                    {project.title}
-                  </h3>
-                  <p className="font-inter text-lg md:text-xl text-black/70 leading-relaxed mb-6">
-                    {project.description}
-                  </p>
-                  
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-3 mb-8">
-                    {project.tech.map((tech, techIndex) => (
-                      <motion.span
-                        key={techIndex}
-                        className="px-4 py-2 bg-black/5 text-black font-inter font-medium rounded-full text-sm"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.4 + techIndex * 0.1 }}
-                        whileHover={{ scale: 1.05, backgroundColor: '#FF5722', color: '#FDF6E3' }}
-                      >
-                        {tech}
-                      </motion.span>
-                    ))}
-                  </div>
-
-                  {/* Project Links */}
-                  <div className="flex gap-4">
-                    <motion.button
-                      className="px-8 py-3 bg-deep-orange text-cream font-space-grotesk font-semibold rounded-full hover-lift hover-glow"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleProjectClick(project.id)}
-                    >
-                      View Project
-                    </motion.button>
-                    <motion.a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-8 py-3 border-2 border-black text-black font-space-grotesk font-semibold rounded-full hover:bg-black hover:text-cream transition-colors duration-300"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      GitHub
-                    </motion.a>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
+            )
+          })}
         </div>
+      </div>
 
-        {/* View All Projects Link */}
-        <motion.div 
-          className="text-center mt-16"
-          variants={itemVariants}
-        >
-          <motion.div 
-            className="inline-block"
-            whileHover={{ scale: 1.05 }}
-          >
-            <span className="font-space-grotesk font-semibold text-lg border-b-2 border-deep-orange text-deep-orange cursor-pointer">
-              View All Projects →
-            </span>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+      <style jsx>{`
+        .writing-vertical {
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+        }
+        
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+        
+        @keyframes bounce {
+          0%, 20%, 53%, 80%, 100% {
+            transform: translateY(0);
+          }
+          40%, 43% {
+            transform: translateY(-10px);
+          }
+          70% {
+            transform: translateY(-5px);
+          }
+        }
+      `}</style>
     </section>
   )
 }

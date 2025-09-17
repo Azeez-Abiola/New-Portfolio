@@ -1,6 +1,8 @@
 import HeroSection from '../components/HeroSection'
 import SkillsSection from '../components/SkillsSection'
 import SelectedWorksSection from '../components/SelectedWorksSection'
+import MobileProjectsSection from '../components/MobileProjectsSection'
+import WorkExperienceSection from '../components/WorkExperienceSection'
 import BlogSection from '../components/BlogSection'
 import ContactSection from '../components/ContactSection'
 import ScrollReveal from '../components/ScrollReveal'
@@ -16,6 +18,14 @@ const HomePage = () => {
       
       <ScrollReveal delay={0.2}>
         <SelectedWorksSection />
+      </ScrollReveal>
+      
+      <ScrollReveal delay={0.1}>
+        <MobileProjectsSection />
+      </ScrollReveal>
+      
+      <ScrollReveal delay={0.2}>
+        <WorkExperienceSection />
       </ScrollReveal>
       
       <ScrollReveal delay={0.1}>

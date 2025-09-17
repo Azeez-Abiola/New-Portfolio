@@ -51,4 +51,9 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
 }
