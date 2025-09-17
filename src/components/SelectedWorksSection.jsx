@@ -44,13 +44,12 @@ const SelectedWorksSection = () => {
       const section = sectionRef.current
       const rect = section.getBoundingClientRect()
       
-      // Check if user has entered the section
-      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
-      const isCompletelyInView = rect.top <= 0 && rect.bottom >= window.innerHeight
+      // Check if section is fully visible with some margin for better UX
+      const sectionFullyVisible = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
       const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
 
-      // If user has entered the section and section is in view, lock scrolling
-      if (hasEnteredSection && isPartiallyInView) {
+      // Only lock scrolling when section is mostly/fully visible
+      if (sectionFullyVisible && isPartiallyInView) {
         e.preventDefault()
         
         // Prevent rapid scrolling
@@ -112,10 +111,10 @@ const SelectedWorksSection = () => {
       if (!sectionRef.current) return
       const section = sectionRef.current
       const rect = section.getBoundingClientRect()
-      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
+      const sectionFullyVisible = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
       const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
 
-      if (hasEnteredSection && isPartiallyInView) {
+      if (sectionFullyVisible && isPartiallyInView) {
         touchStartY = e.touches[0].clientY
       }
     }
@@ -124,10 +123,10 @@ const SelectedWorksSection = () => {
       if (!sectionRef.current) return
       const section = sectionRef.current
       const rect = section.getBoundingClientRect()
-      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
+      const sectionFullyVisible = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
       const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
 
-      if (hasEnteredSection && isPartiallyInView && touchStartY !== 0) {
+      if (sectionFullyVisible && isPartiallyInView && touchStartY !== 0) {
         e.preventDefault() // Prevent default scroll
       }
     }
@@ -137,10 +136,10 @@ const SelectedWorksSection = () => {
       
       const section = sectionRef.current
       const rect = section.getBoundingClientRect()
-      const hasEnteredSection = rect.top <= window.innerHeight * 0.5
+      const sectionFullyVisible = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
       const isPartiallyInView = rect.top < window.innerHeight && rect.bottom > 0
 
-      if (hasEnteredSection && isPartiallyInView) {
+      if (sectionFullyVisible && isPartiallyInView) {
         touchEndY = e.changedTouches[0].clientY
         const touchDiff = touchStartY - touchEndY
         const minSwipeDistance = 50
@@ -199,9 +198,9 @@ const SelectedWorksSection = () => {
 
       const section = sectionRef.current
       const rect = section.getBoundingClientRect()
-      const isInView = rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.9
+      const sectionFullyVisible = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
 
-      if (isInView && !scrollLocked) {
+      if (sectionFullyVisible && !scrollLocked) {
         if (e.key === 'ArrowDown' && currentIndex < projects.length - 1) {
           e.preventDefault()
           setScrollLocked(true)
