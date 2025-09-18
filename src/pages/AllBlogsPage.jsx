@@ -1,9 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import { blogPosts } from '../data/portfolioData'
 
 const AllBlogsPage = () => {
   const navigate = useNavigate()
+  const [allBlogs, setAllBlogs] = useState([])
+
+  useEffect(() => {
+    // Combine static blog posts with admin-created blogs
+    const adminBlogs = JSON.parse(localStorage.getItem('blogs') || '[]')
+    const combinedBlogs = [...blogPosts, ...adminBlogs]
+    setAllBlogs(combinedBlogs)
+  }, [])
 
   const handleBlogClick = (blogId) => {
     navigate(`/blog/${blogId}`)
@@ -69,7 +78,7 @@ const AllBlogsPage = () => {
           className="container-max grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
         >
-          {blogPosts.map((post, index) => (
+          {allBlogs.map((post, index) => (
             <motion.div
               key={post.id}
               className="group cursor-pointer"

@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 const workExperience = [
   {
     id: 1,
-    position: 'Senior Frontend Developer',
+    position: 'Frontend Developer',
     company: 'Marvin Kitchen Culinary Academy',
     period: 'January 2025 – Present',
     duration: 'Ongoing (Freelance/Gig Project)',
@@ -28,7 +28,7 @@ const workExperience = [
   },
   {
     id: 2,
-    position: 'Senior Frontend Developer',
+    position: 'Mobile Engineer',
     company: 'IWM Private Banking',
     period: 'September 2024 – June 2025',
     duration: '10 months (Full-time/Contract)',
@@ -52,7 +52,7 @@ const workExperience = [
   },
   {
     id: 3,
-    position: 'Senior Frontend Developer',
+    position: 'Frontend Developer',
     company: 'Ogakay',
     period: 'January 2024 – Present',
     duration: 'Ongoing',
@@ -76,7 +76,7 @@ const workExperience = [
   },
   {
     id: 4,
-    position: 'Senior Frontend Developer',
+    position: 'Mobile Engineer',
     company: 'Poster Box',
     period: 'January 2024 – May 2024',
     duration: '5 months',
@@ -100,7 +100,7 @@ const workExperience = [
   },
   {
     id: 5,
-    position: 'Senior Frontend Developer',
+    position: 'Frontend Developer',
     company: 'StudyMeister',
     period: 'May 2024 – August 2024',
     duration: '4 months',
@@ -121,7 +121,31 @@ const workExperience = [
   },
   {
     id: 6,
-    position: 'Senior Frontend Developer',
+    position: 'Mobile Engineer',
+    company: 'StyleItPaidi',
+    period: 'June 2023 – December 2023',
+    duration: '7 months',
+    description: 'Developed mobile fashion and styling application using React Native, TypeScript, and Expo. Built features for personal styling, wardrobe management, and social fashion networking.',
+    responsibilities: [
+      'Built mobile fashion and styling application',
+      'Implemented user authentication and profile management',
+      'Created interactive wardrobe management features',
+      'Integrated social networking and styling recommendations',
+      'Developed image processing and styling tools',
+      'Built real-time chat and styling consultation features'
+    ],
+    projects: [
+      'StyleItPaidi Mobile App',
+      'Wardrobe Management System',
+      'Social Fashion Network',
+      'Personal Styling Tools'
+    ],
+    technologies: ['React Native', 'TypeScript', 'Expo', 'Firebase', 'Redux Toolkit', 'React Native Camera'],
+    isActive: false
+  },
+  {
+    id: 7,
+    position: 'Frontend Developer',
     company: 'SwiftyHost',
     period: 'January 2021 – Present',
     duration: '3+ years',
@@ -141,8 +165,8 @@ const workExperience = [
     isActive: true
   },
   {
-    id: 7,
-    position: 'Senior Frontend Developer',
+    id: 8,
+    position: 'Frontend Developer',
     company: 'Smartlearn',
     period: 'October 2019 – September 2020',
     duration: '1 year',
@@ -162,7 +186,7 @@ const workExperience = [
     isActive: false
   },
   {
-    id: 8,
+    id: 9,
     position: 'Frontend Developer',
     company: 'LorenzoTvmedia',
     period: 'May 2017 – July 2019',
@@ -184,8 +208,8 @@ const workExperience = [
     isActive: false
   },
   {
-    id: 9,
-    position: 'Junior Frontend Developer',
+    id: 10,
+    position: 'Frontend Developer',
     company: 'One Credit Pay Solutions Limited',
     period: 'October 2016 – May 2017',
     duration: '8 months',
@@ -262,57 +286,17 @@ const WorkExperienceSection = () => {
   }
 
   return (
-    <section className="min-h-screen py-16 md:py-24 bg-gradient-to-br from-black via-gray-900 to-black text-white relative overflow-hidden">
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
-          className="absolute top-32 left-16 w-4 h-4 bg-deep-orange/30 rounded-full"
-          animate={{ 
-            y: [0, -40, 0],
-            scale: [1, 1.2, 1]
-          }}
-          transition={{ 
-            duration: 8, 
-            repeat: Infinity, 
-            ease: "easeInOut" 
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-40 right-20 w-6 h-1 bg-deep-orange/40 rounded-full"
-          animate={{ 
-            rotate: [0, 360],
-            x: [0, 30, 0]
-          }}
-          transition={{ 
-            duration: 12, 
-            repeat: Infinity, 
-            ease: "linear" 
-          }}
-        />
-        <motion.div 
-          className="absolute top-1/2 left-10 w-3 h-3 border border-deep-orange/50 rotate-45"
-          animate={{ 
-            rotate: [45, 405, 45],
-            y: [0, -20, 0]
-          }}
-          transition={{ 
-            duration: 6, 
-            repeat: Infinity, 
-            ease: "easeInOut" 
-          }}
-        />
-      </div>
-
+    <section className="min-h-screen py-16 md:py-24 bg-black text-white relative overflow-hidden">
       {/* Section Number */}
       <motion.div 
         className="absolute top-8 md:top-12 left-4 md:left-8 z-10"
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: "-10%" }}
+        viewport={{ once: true, margin: "-50%" }}
         transition={{ duration: 0.4 }}
       >
         <div className="font-space-grotesk font-bold text-4xl md:text-6xl lg:text-7xl text-white/20">
-          05
+          04
         </div>
         <div className="w-8 md:w-12 h-1 bg-white/30 mt-2"></div>
       </motion.div>
@@ -321,8 +305,12 @@ const WorkExperienceSection = () => {
         className="max-w-7xl mx-auto py-16 md:py-20 relative z-10 px-4 md:px-8"
       >
         {/* Section Header */}
-        <div 
+        <motion.div 
           className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-30%" }}
+          transition={{ duration: 0.6 }}
         >
           <h2 className="font-space-grotesk font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6">
             My Work <span className="text-deep-orange">Experience</span>
@@ -331,13 +319,17 @@ const WorkExperienceSection = () => {
             Over 5 years of crafting digital experiences across startups and established companies. 
             Each role has shaped my expertise in building scalable, user-centric applications.
           </p>
-        </div>
+        </motion.div>
 
         {/* Experience Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Experience List - Left Side */}
-          <div 
+          <motion.div 
             className="lg:col-span-1 space-y-4 order-1 lg:order-1"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-20%" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h3 className="font-space-grotesk font-bold text-lg md:text-xl mb-4 md:mb-6 text-deep-orange">
               Companies & Roles
@@ -356,7 +348,10 @@ const WorkExperienceSection = () => {
                   onMouseLeave={() => setHoveredCard(null)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  variants={cardVariants}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-20%" }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-space-grotesk font-semibold text-sm md:text-base">
@@ -373,19 +368,23 @@ const WorkExperienceSection = () => {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Experience Details - Right Side */}
-          <div 
+          <motion.div 
             ref={detailsRef}
             className="lg:col-span-2 order-2 lg:order-2"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-20%" }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             <motion.div 
               className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10"
               key={`experience-${selectedExperience.id}`}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
               {/* Header */}
@@ -484,12 +483,16 @@ const WorkExperienceSection = () => {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Stats Section */}
-        <div 
+        <motion.div 
           className="mt-16 md:mt-20 grid md:grid-cols-4 gap-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-20%" }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
           {[
             { number: '5+', label: 'Years Experience' },
@@ -512,7 +515,7 @@ const WorkExperienceSection = () => {
               <div className="font-inter text-white/70">{stat.label}</div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

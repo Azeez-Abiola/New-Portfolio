@@ -1,11 +1,28 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import { blogPosts } from '../data/portfolioData'
 
 const BlogPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const post = blogPosts.find(p => p.id === parseInt(id))
+  const [post, setPost] = useState(null)
+
+  useEffect(() => {
+    // Check static blog posts first
+    const staticPost = blogPosts.find(p => p.id === parseInt(id))
+    if (staticPost) {
+      setPost(staticPost)
+      return
+    }
+
+    // Check admin-created blogs
+    const adminBlogs = JSON.parse(localStorage.getItem('blogs') || '[]')
+    const adminPost = adminBlogs.find(p => p.id === id || p.id === parseInt(id))
+    if (adminPost) {
+      setPost(adminPost)
+    }
+  }, [id])
 
   if (!post) {
     return (
@@ -108,18 +125,26 @@ const BlogPage = () => {
           variants={itemVariants}
         >
           <div className="font-inter text-lg leading-relaxed text-black/80 space-y-6">
-            <p>
-              This is where the full blog post content would be displayed. In a real implementation, 
-              you would fetch the content from a CMS or markdown files and render it here.
-            </p>
-            <p>
-              The blog post content would include rich text formatting, code snippets, images, 
-              and other media to create engaging technical content for your readers.
-            </p>
-            <p>
-              You could use libraries like react-markdown or MDX to render markdown content 
-              with React components embedded within the posts.
-            </p>
+            {post.content ? (
+              // Render admin-created blog content (could be markdown)
+              <div dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }} />
+            ) : (
+              // Static blog placeholder content
+              <>
+                <p>
+                  This is where the full blog post content would be displayed. In a real implementation, 
+                  you would fetch the content from a CMS or markdown files and render it here.
+                </p>
+                <p>
+                  The blog post content would include rich text formatting, code snippets, images, 
+                  and other media to create engaging technical content for your readers.
+                </p>
+                <p>
+                  You could use libraries like react-markdown or MDX to render markdown content 
+                  with React components embedded within the posts.
+                </p>
+              </>
+            )}
           </div>
         </motion.div>
 

@@ -282,6 +282,65 @@ export const socialLinks = [
   }
 ];
 
+// Testimonials data
+export const testimonials = [
+  {
+    id: 1,
+    name: 'Oseni Abdulhaleem Adel',
+    position: 'Fullstack Developer',
+    company: 'Software Engineer',
+    image: '/Images/testimonials/avatar1.jpg',
+    rating: 5,
+    testimonial: 'Abiola is one of the most talented software engineers I\'ve worked with. His approach to problem solving is unique coupled with his ability to communicate ideas clearly. An amazing guy to have on your team.',
+    project: 'Software Development',
+    date: '2024'
+  },
+  {
+    id: 2,
+    name: 'Khalid Oyeneye',
+    position: 'Senior Frontend Developer',
+    company: 'Frontend Development',
+    image: '/Images/testimonials/avatar2.jpg',
+    rating: 5,
+    testimonial: 'I had the chance to work with Renzo in the past, and his grit and raw drive stood out. He showed a strong work ethic, pushed himself to learn, and delivered results through sheer determination and hard work.',
+    project: 'Frontend Development',
+    date: '2024'
+  },
+  {
+    id: 3,
+    name: 'Adeoluwakishi',
+    position: 'Backend Developer',
+    company: 'Backend Development',
+    image: '/Images/testimonials/avatar3.jpg',
+    rating: 5,
+    testimonial: 'Renzo is that chilled guy that doesn\'t stress you, he thinks beyond just codes, he loves to know how the system runs, as a backend developer he makes my job easier. Outside work? He is even cooler. He is fun to work with and I would love to work on more projects with him.',
+    project: 'Backend Integration',
+    date: '2024'
+  },
+  {
+    id: 4,
+    name: 'Yusuf Omogbolahan Abdulkabir',
+    position: 'UI/UX and Creative Product Designer',
+    company: 'Design & Development',
+    image: '/Images/testimonials/avatar4.jpg',
+    rating: 5,
+    testimonial: 'I\'ve known Abiola for over five years, and in that time, I\'ve seen him grow into one of the most brilliant and reliable people I know. We\'ve worked together on several projects including LorenzoTV, PosterBox, and more. He has a rare combination of technical expertise and excellent communication skills, making collaboration smooth and productive.',
+    project: 'LorenzoTV, PosterBox & More',
+    date: '5+ Years'
+  },
+  {
+    id: 5,
+    name: 'Samuel Tuoyo',
+    position: 'Backend Developer',
+    company: 'Full-Stack Development',
+    image: '/Images/testimonials/avatar5.jpg',
+    rating: 5,
+    testimonial: 'I\'ve collaborated with Mr. Abiola Azeez on several freelance projects as a full-stack developer, including building backends for dashboards and full-stack websites like Marvin Kitchen Culinary Academy. Our collaboration has been productive and has given me exposure to multiple real-world projects.',
+    project: 'Marvin Kitchen Culinary Academy',
+    date: '2024'
+  }
+];
+
 // Personal information
 export const personalInfo = {
   name: 'Abiola Azeez Quadri',

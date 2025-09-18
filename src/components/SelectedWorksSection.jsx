@@ -330,26 +330,6 @@ const SelectedWorksSection = () => {
         </motion.p>
       </motion.div>
 
-      {/* Scroll Hint */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.5 }}
-        animate={{ y: [0, -10, 0] }}
-        style={{ 
-          animation: 'bounce 2s infinite'
-        }}
-      >
-        <div className="flex flex-col items-center gap-2 text-black/60">
-          <div className="font-inter text-xs md:text-sm tracking-widest">SCROLL TO FLIP</div>
-          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-      </motion.div>
-
       {/* Card Container */}
       <div className="relative w-full h-full flex items-center justify-center px-4 md:px-8 pt-32 md:pt-40">
         <div className="relative w-full max-w-6xl h-[70vh] flex items-center justify-center perspective-1000">
@@ -455,16 +435,6 @@ const SelectedWorksSection = () => {
                         >
                           View Project
                         </motion.button>
-                        <motion.a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-6 md:px-8 py-2.5 md:py-3 border-2 border-black text-black font-space-grotesk font-semibold rounded-full hover:bg-black hover:text-cream transition-colors duration-300 text-center text-sm md:text-base"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          GitHub
-                        </motion.a>
                       </motion.div>
                     </motion.div>
                   </div>
