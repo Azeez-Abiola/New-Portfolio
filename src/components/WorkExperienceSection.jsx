@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { useState, useRef } from 'react'
 
 const workExperience = [
@@ -250,68 +249,21 @@ const WorkExperienceSection = () => {
     }
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.1, // Reduced from 0.3
-        staggerChildren: 0.05 // Reduced from 0.1
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 }, // Reduced from y: 50
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4, // Reduced from 0.8
-        ease: "easeOut"
-      }
-    }
-  }
-
-  const cardVariants = {
-    hidden: { x: -50, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  }
-
   return (
-    <section className="min-h-screen py-16 md:py-24 bg-black text-white relative overflow-hidden">
+    <section id="work-experience" className="min-h-screen py-16 md:py-24 bg-black text-white relative overflow-hidden">
       {/* Section Number */}
-      <motion.div 
-        className="absolute top-8 md:top-12 left-4 md:left-8 z-10"
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: "-50%" }}
-        transition={{ duration: 0.4 }}
-      >
+      <div className="absolute top-8 md:top-12 left-4 md:left-8 z-10">
         <div className="font-space-grotesk font-bold text-4xl md:text-6xl lg:text-7xl text-white/20">
           04
         </div>
         <div className="w-8 md:w-12 h-1 bg-white/30 mt-2"></div>
-      </motion.div>
+      </div>
 
       <div 
         className="max-w-7xl mx-auto py-16 md:py-20 relative z-10 px-4 md:px-8"
       >
         {/* Section Header */}
-        <motion.div 
-          className="text-center mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-30%" }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="text-center mb-16 md:mb-20">
           <h2 className="font-space-grotesk font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6">
             My Work <span className="text-deep-orange">Experience</span>
           </h2>
@@ -319,24 +271,18 @@ const WorkExperienceSection = () => {
             Over 5 years of crafting digital experiences across startups and established companies. 
             Each role has shaped my expertise in building scalable, user-centric applications.
           </p>
-        </motion.div>
+        </div>
 
         {/* Experience Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Experience List - Left Side */}
-          <motion.div 
-            className="lg:col-span-1 space-y-4 order-1 lg:order-1"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-20%" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <div className="lg:col-span-1 space-y-4 order-1 lg:order-1">
             <h3 className="font-space-grotesk font-bold text-lg md:text-xl mb-4 md:mb-6 text-deep-orange">
               Companies & Roles
             </h3>
             <div className="space-y-3">
               {workExperience.map((exp, index) => (
-                <motion.div
+                <div
                   key={exp.id}
                   className={`p-4 rounded-xl cursor-pointer transition-all duration-300 border ${
                     selectedExperience.id === exp.id 
@@ -346,8 +292,6 @@ const WorkExperienceSection = () => {
                   onClick={() => handleExperienceSelect(exp)}
                   onMouseEnter={() => setHoveredCard(exp.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20%" }}
@@ -365,27 +309,19 @@ const WorkExperienceSection = () => {
                   </div>
                   <p className="font-inter text-xs md:text-sm text-white/60 mb-1">{exp.position}</p>
                   <p className="font-inter text-xs md:text-sm text-white/50">{exp.duration}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Experience Details - Right Side */}
-          <motion.div 
+          <div 
             ref={detailsRef}
             className="lg:col-span-2 order-2 lg:order-2"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-20%" }}
-            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <motion.div 
+            <div 
               className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10"
               key={`experience-${selectedExperience.id}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
             >
               {/* Header */}
               <div className="mb-6">
@@ -394,13 +330,9 @@ const WorkExperienceSection = () => {
                     {selectedExperience.position}
                   </h3>
                   {selectedExperience.isActive && (
-                    <motion.span 
-                      className="px-4 py-2 bg-deep-orange/20 text-deep-orange text-sm rounded-full font-semibold mt-2 md:mt-0 w-fit"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
+                    <span className="px-4 py-2 bg-deep-orange/20 text-deep-orange text-sm rounded-full font-semibold mt-2 md:mt-0 w-fit">
                       Currently Active
-                    </motion.span>
+                    </span>
                   )}
                 </div>
                 <h4 className="font-space-grotesk font-semibold text-xl text-deep-orange mb-2">
@@ -425,18 +357,15 @@ const WorkExperienceSection = () => {
                 </h5>
                 <div className="grid md:grid-cols-2 gap-2">
                   {selectedExperience.responsibilities.map((responsibility, index) => (
-                    <motion.div
+                    <div
                       key={index}
                       className="flex items-start gap-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.02 }}
                     >
                       <div className="w-1.5 h-1.5 bg-deep-orange rounded-full mt-2 flex-shrink-0"></div>
                       <span className="font-inter text-sm text-white/70 leading-relaxed">
                         {responsibility}
                       </span>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -448,16 +377,12 @@ const WorkExperienceSection = () => {
                 </h5>
                 <div className="flex flex-wrap gap-2">
                   {selectedExperience.projects.map((project, index) => (
-                    <motion.span
+                    <span
                       key={index}
-                      className="px-3 py-1.5 bg-deep-orange/10 text-deep-orange border border-deep-orange/20 rounded-full text-sm font-inter"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.02 }}
-                      whileHover={{ scale: 1.05 }}
+                      className="px-3 py-1.5 bg-deep-orange/10 text-deep-orange border border-deep-orange/20 rounded-full text-sm font-inter hover:scale-105 transition-transform duration-200"
                     >
                       {project}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -469,53 +394,38 @@ const WorkExperienceSection = () => {
                 </h5>
                 <div className="flex flex-wrap gap-2">
                   {selectedExperience.technologies.map((tech, index) => (
-                    <motion.span
+                    <span
                       key={index}
-                      className="px-3 py-1.5 bg-white/10 text-white rounded-full text-sm font-inter hover:bg-white/20 transition-colors duration-300"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.02 }}
-                      whileHover={{ scale: 1.05 }}
+                      className="px-3 py-1.5 bg-white/10 text-white rounded-full text-sm font-inter hover:bg-white/20 hover:scale-105 transition-all duration-300"
                     >
                       {tech}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
         {/* Stats Section */}
-        <motion.div 
-          className="mt-16 md:mt-20 grid md:grid-cols-4 gap-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-20%" }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        <div className="mt-16 md:mt-20 grid md:grid-cols-4 gap-6">
           {[
             { number: '5+', label: 'Years Experience' },
             { number: '25+', label: 'Projects Completed' },
             { number: '15+', label: 'Companies Worked With' },
             { number: '10+', label: 'Technologies Mastered' }
           ].map((stat, index) => (
-            <motion.div
+            <div
               key={index}
-              className="text-center p-6 bg-white/5 rounded-xl border border-white/10"
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ delay: index * 0.05 }}
+              className="text-center p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors duration-300"
             >
               <div className="font-space-grotesk font-bold text-3xl md:text-4xl text-deep-orange mb-2">
                 {stat.number}
               </div>
               <div className="font-inter text-white/70">{stat.label}</div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
