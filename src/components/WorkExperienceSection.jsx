@@ -238,14 +238,21 @@ const WorkExperienceSection = () => {
   const handleExperienceSelect = (experience) => {
     setSelectedExperience(experience)
     
-    // Scroll to details section on mobile/tablet
-    if (window.innerWidth < 1024 && detailsRef.current) {
-      setTimeout(() => {
-        detailsRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        })
-      }, 100)
+    // Safer mobile scroll with error handling
+    try {
+      if (typeof window !== 'undefined' && window.innerWidth < 1024 && detailsRef.current) {
+        setTimeout(() => {
+          if (detailsRef.current) {
+            detailsRef.current.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            })
+          }
+        }, 100)
+      }
+    } catch (error) {
+      // Silently handle any scroll errors
+      console.log('Scroll error handled')
     }
   }
 
@@ -292,10 +299,6 @@ const WorkExperienceSection = () => {
                   onClick={() => handleExperienceSelect(exp)}
                   onMouseEnter={() => setHoveredCard(exp.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-20%" }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-space-grotesk font-semibold text-sm md:text-base">
@@ -319,91 +322,93 @@ const WorkExperienceSection = () => {
             ref={detailsRef}
             className="lg:col-span-2 order-2 lg:order-2"
           >
-            <div 
-              className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10"
-              key={`experience-${selectedExperience.id}`}
-            >
-              {/* Header */}
-              <div className="mb-6">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <h3 className="font-space-grotesk font-bold text-2xl md:text-3xl">
-                    {selectedExperience.position}
-                  </h3>
-                  {selectedExperience.isActive && (
-                    <span className="px-4 py-2 bg-deep-orange/20 text-deep-orange text-sm rounded-full font-semibold mt-2 md:mt-0 w-fit">
-                      Currently Active
-                    </span>
-                  )}
-                </div>
-                <h4 className="font-space-grotesk font-semibold text-xl text-deep-orange mb-2">
-                  {selectedExperience.company}
-                </h4>
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 text-white/60">
-                  <span className="font-inter text-sm">{selectedExperience.period}</span>
-                  <span className="hidden md:block">•</span>
-                  <span className="font-inter text-sm">{selectedExperience.duration}</span>
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="font-inter text-white/80 leading-relaxed mb-6">
-                {selectedExperience.description}
-              </p>
-
-              {/* Key Responsibilities */}
-              <div className="mb-6">
-                <h5 className="font-space-grotesk font-semibold text-lg mb-3 text-white">
-                  Key Responsibilities
-                </h5>
-                <div className="grid md:grid-cols-2 gap-2">
-                  {selectedExperience.responsibilities.map((responsibility, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-3"
-                    >
-                      <div className="w-1.5 h-1.5 bg-deep-orange rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="font-inter text-sm text-white/70 leading-relaxed">
-                        {responsibility}
+            {selectedExperience && (
+              <div 
+                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10"
+                key={`experience-${selectedExperience.id}`}
+              >
+                {/* Header */}
+                <div className="mb-6">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <h3 className="font-space-grotesk font-bold text-2xl md:text-3xl">
+                      {selectedExperience.position}
+                    </h3>
+                    {selectedExperience.isActive && (
+                      <span className="px-4 py-2 bg-deep-orange/20 text-deep-orange text-sm rounded-full font-semibold mt-2 md:mt-0 w-fit">
+                        Currently Active
                       </span>
-                    </div>
-                  ))}
+                    )}
+                  </div>
+                  <h4 className="font-space-grotesk font-semibold text-xl text-deep-orange mb-2">
+                    {selectedExperience.company}
+                  </h4>
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 text-white/60">
+                    <span className="font-inter text-sm">{selectedExperience.period}</span>
+                    <span className="hidden md:block">•</span>
+                    <span className="font-inter text-sm">{selectedExperience.duration}</span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Projects */}
-              <div className="mb-6">
-                <h5 className="font-space-grotesk font-semibold text-lg mb-3 text-white">
-                  Key Projects
-                </h5>
-                <div className="flex flex-wrap gap-2">
-                  {selectedExperience.projects.map((project, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1.5 bg-deep-orange/10 text-deep-orange border border-deep-orange/20 rounded-full text-sm font-inter hover:scale-105 transition-transform duration-200"
-                    >
-                      {project}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                {/* Description */}
+                <p className="font-inter text-white/80 leading-relaxed mb-6">
+                  {selectedExperience.description}
+                </p>
 
-              {/* Technologies */}
-              <div>
-                <h5 className="font-space-grotesk font-semibold text-lg mb-3 text-white">
-                  Technologies Used
-                </h5>
-                <div className="flex flex-wrap gap-2">
-                  {selectedExperience.technologies.map((tech, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1.5 bg-white/10 text-white rounded-full text-sm font-inter hover:bg-white/20 hover:scale-105 transition-all duration-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                {/* Key Responsibilities */}
+                <div className="mb-6">
+                  <h5 className="font-space-grotesk font-semibold text-lg mb-3 text-white">
+                    Key Responsibilities
+                  </h5>
+                  <div className="grid md:grid-cols-2 gap-2">
+                    {selectedExperience.responsibilities && selectedExperience.responsibilities.map((responsibility, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3"
+                      >
+                        <div className="w-1.5 h-1.5 bg-deep-orange rounded-full mt-2 flex-shrink-0"></div>
+                        <span className="font-inter text-sm text-white/70 leading-relaxed">
+                          {responsibility}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Projects */}
+                <div className="mb-6">
+                  <h5 className="font-space-grotesk font-semibold text-lg mb-3 text-white">
+                    Key Projects
+                  </h5>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedExperience.projects && selectedExperience.projects.map((project, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1.5 bg-deep-orange/10 text-deep-orange border border-deep-orange/20 rounded-full text-sm font-inter hover:scale-105 transition-transform duration-200"
+                      >
+                        {project}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Technologies */}
+                <div className="mb-6">
+                  <h5 className="font-space-grotesk font-semibold text-lg mb-3 text-white">
+                    Technologies Used
+                  </h5>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedExperience.technologies && selectedExperience.technologies.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1.5 bg-white/10 text-white rounded-full text-sm font-inter hover:bg-white/20 hover:scale-105 transition-all duration-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 

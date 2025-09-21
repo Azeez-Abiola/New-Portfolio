@@ -25,9 +25,7 @@ const HomePage = () => {
         <MobileProjectsSection />
       </ScrollReveal>
       
-      <ScrollReveal delay={0.2}>
-        <WorkExperienceSection />
-      </ScrollReveal>
+      <WorkExperienceSection />
       
       <ScrollReveal delay={0.1}>
         <TestimonialsSection />
