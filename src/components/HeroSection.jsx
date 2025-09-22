@@ -231,7 +231,7 @@ const HeroSection = () => {
           >
             <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden bg-gradient-to-br from-deep-orange/20 to-cream/20 shadow-2xl">
               <img 
-                src="/Images/hero1.jpg"
+                src="/Images/Abiola.jpg"
                 alt="Abiola Azeez Quadri - Software Engineer"
                 className="w-full h-full object-cover"
               />
