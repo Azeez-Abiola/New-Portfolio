@@ -153,6 +153,21 @@ export const projects = [
       '/Images/Selected-Works/princessnatasha1.png'
     ],
     fullDescription: 'Princess Natasha Portfolio is a professional B2B content writer portfolio that tells brand stories in ways that convert passing leads to loyal paying customers. The platform showcases comprehensive content writing and strategy services, featuring goal-driven, measurable, and relatable content solutions. Services include content writing, content strategy, and brand strategy with expertise in SEO and audience engagement for businesses worldwide.'
+  },
+  {
+    id: 10,
+    title: 'Medium Clone',
+    description: 'A comprehensive Medium clone application built as a job assessment interview project',
+    thumbnail: '/Images/Selected-Works/medium-clone1.png',
+    tech: ['React.js', 'TailwindCSS', 'Styled Components', 'JavaScript'],
+    liveUrl: 'https://korna-medium-assessment.vercel.app/',
+    githubUrl: '#',
+    screenshots: [
+      '/Images/Selected-Works/medium-clone1.png',
+      '/Images/Selected-Works/medium-clone2.png',
+      '/Images/Selected-Works/medium-clone3.png'
+    ],
+    fullDescription: 'Medium Clone is a comprehensive blogging platform application that replicates the core functionality and design of Medium. Built as a job assessment interview project, this application demonstrates proficiency in modern React development, responsive design, and component architecture. The platform features article reading, user interface components, responsive design, and seamless user experience across all devices. Technologies used include React.js for component-based architecture, TailwindCSS for utility-first styling, and Styled Components for dynamic styling solutions.'
   }
 ];
 
