@@ -168,6 +168,21 @@ export const projects = [
       '/Images/Selected-Works/medium-clone3.png'
     ],
     fullDescription: 'Medium Clone is a comprehensive blogging platform application that replicates the core functionality and design of Medium. Built as a job assessment interview project, this application demonstrates proficiency in modern React development, responsive design, and component architecture. The platform features article reading, user interface components, responsive design, and seamless user experience across all devices. Technologies used include React.js for component-based architecture, TailwindCSS for utility-first styling, and Styled Components for dynamic styling solutions.'
+  },
+  {
+    id: 11,
+    title: 'PosterBox',
+    description: 'Community-powered delivery platform connecting senders with travelers across Nigeria',
+    thumbnail: '/Images/Selected-Works/poster3.png',
+    tech: ['React.js', 'React Native', 'Node.js', 'TailwindCSS'],
+    liveUrl: 'https://www.posterbox.com.ng/',
+    githubUrl: '#',
+    screenshots: [
+      '/Images/Selected-Works/poster3.png',
+      '/Images/Selected-Works/poster1.png',
+      '/Images/Selected-Works/poster2.png'
+    ],
+    fullDescription: 'PosterBox is a revolutionary community-powered delivery platform that transforms how packages are sent across Nigeria. The platform connects senders with verified travelers, enabling fast, secure, and affordable delivery services. With over 5,000+ completed deliveries and 2,500+ active users, PosterBox offers real-time GPS tracking, insured deliveries, and competitive pricing that saves up to 40% compared to traditional shipping methods. The platform features dual earning opportunities for travelers (₦5,000-20,000 per delivery), 24/7 customer support, and comprehensive mobile applications for both Android and iOS. Key features include intuitive package booking, instant notifications, end-to-end security, and a user-friendly interface designed for modern travelers and businesses.'
   }
 ];
 
