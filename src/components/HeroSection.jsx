@@ -233,7 +233,7 @@ const HeroSection = () => {
               <img 
                 src="/Images/Abiola.jpeg"
                 alt="Abiola Azeez Quadri - Software Engineer"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover mt-4 md:mt-6"
               />
             </div>
           </motion.div>
